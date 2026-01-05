@@ -6,6 +6,7 @@ import com.larch.githubrepositoryservice.entity.Repository;
 import com.larch.githubrepositoryservice.entity.RepositoryResponse;
 import com.larch.githubrepositoryservice.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GitHubRepositoryService {
@@ -24,7 +26,7 @@ public class GitHubRepositoryService {
     private String githubApiUrl;
 
     public List<RepositoryResponse> getRepositories(String username) {
-
+        log.debug("Fetching repositories from GitHub for user: {}", username);
         String path = githubApiUrl + "/users/" + username + "/repos";
 
         try {
@@ -35,6 +37,7 @@ public class GitHubRepositoryService {
                     .map(repository -> createRepositoryResponseWithBranches(username, repository))
                     .collect(Collectors.toList());
         } catch (HttpClientErrorException.NotFound e) {
+            log.warn("GitHub user not found: {}", username);
             throw new UserNotFoundException("GitHub user not found: " + username);
         }
     }
@@ -64,5 +67,4 @@ public class GitHubRepositoryService {
         String commitPath = githubApiUrl + "/repos/" + username + "/" + repositoryName + "/commits/" + branch.getName();
         return restTemplate.getForObject(commitPath, LastCommit.class);
     }
-
 }

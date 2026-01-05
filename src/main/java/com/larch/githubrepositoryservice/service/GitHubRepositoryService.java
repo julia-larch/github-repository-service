@@ -4,6 +4,7 @@ import com.larch.githubrepositoryservice.entity.Branch;
 import com.larch.githubrepositoryservice.entity.LastCommit;
 import com.larch.githubrepositoryservice.entity.Repository;
 import com.larch.githubrepositoryservice.entity.RepositoryResponse;
+import com.larch.githubrepositoryservice.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class GitHubRepositoryService {
                     .map(repository -> createRepositoryResponseWithBranches(username, repository))
                     .collect(Collectors.toList());
         } catch (HttpClientErrorException.NotFound e) {
-            throw new RuntimeException(e);
+            throw new UserNotFoundException("GitHub user not found: " + username);
         }
     }
 

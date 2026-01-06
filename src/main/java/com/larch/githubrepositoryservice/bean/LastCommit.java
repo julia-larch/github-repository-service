@@ -1,4 +1,4 @@
-package com.larch.githubrepositoryservice.entity;
+package com.larch.githubrepositoryservice.bean;
 
 import lombok.Data;
 

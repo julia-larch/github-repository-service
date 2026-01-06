@@ -1,4 +1,4 @@
-package com.larch.githubrepositoryservice.entity;
+package com.larch.githubrepositoryservice.bean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

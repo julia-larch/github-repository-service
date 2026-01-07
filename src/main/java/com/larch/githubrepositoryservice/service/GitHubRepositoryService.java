@@ -28,7 +28,7 @@ public class GitHubRepositoryService {
 
     private RepositoryResponse fillRepositoryResponseWithBranches(String username, Repository repository) {
         String repositoryName = repository.getName();
-        Branch[] branches = client.getBranches(repositoryName, username);
+        Branch[] branches = client.getBranches(username, repositoryName);
         List<Branch> branchesWithLastCommit = Arrays.stream(branches).toList();
         return mapper.toRepositoryResponse(repository, branchesWithLastCommit);
     }

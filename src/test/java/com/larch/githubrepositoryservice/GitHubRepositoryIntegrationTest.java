@@ -54,6 +54,13 @@ public class GitHubRepositoryIntegrationTest {
                         "owner": {
                          "login": "testUser"
                           }
+                      },
+                      {
+                        "name": "repo2",
+                        "fork": true,
+                        "owner": {
+                         "login": "testUser"
+                          }
                       }
                     ]
                 """)));

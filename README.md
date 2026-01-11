@@ -12,7 +12,7 @@
 - Gradle
 
 
-## Usage
+## Installation
 
 1. Clone repository to your pc:
 ```

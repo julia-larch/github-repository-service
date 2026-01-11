@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -27,7 +26,7 @@ public class GitHubApiClient {
             return restTemplate.getForObject(repositoriesApiUrl, Repository[].class, username);
         } catch (HttpClientErrorException.NotFound e) {
             throw new UserNotFoundException("GitHub user not found: " + username);
-        } catch (HttpClientErrorException | HttpServerErrorException e) {
+        } catch (RuntimeException e) {
             throw new GitHubApiException("Error calling GitHub API");
         }
     }
